@@ -80,7 +80,9 @@ async def autocomplete(ctx: interactions.AutocompleteContext):
 
     results.sort(reverse=True, key=lambda x: x[0])
 
-    choices = [{"name": x[1].name + " - " + x[1].description, "value": x[1].name} for x in results]
+    threshold = max(results[0][0], 30)
+
+    choices = [{"name": x[1].name + " - " + x[1].description, "value": x[1].name} for x in results if x[0]/threshold > 0.75]
 
     await ctx.send(choices=choices)
 
